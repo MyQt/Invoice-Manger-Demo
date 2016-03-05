@@ -21,8 +21,10 @@ void ConfigDialog::on_saveButton_clicked()
     QString databaseName = ui->nameEdit->text();
     QString databaseUser = ui->userEdit->text();
     QString databasePwd = ui->pwdEdit->text();
-    QString user = "xxx";
+    //test
+    QString user = "test";
     QString pwd = "123456";
+
     set.SetHost(host);
     set.SetPort(port);
     set.SetName(databaseName);

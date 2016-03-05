@@ -2,8 +2,9 @@
 #define LOGINDIALOG_H
 
 #include <QDialog>
-#include "database.h"
 #include <QMessageBox>
+#include "setting.h"
+#include "database.h"
 
 namespace Ui {
 class LoginDialog;

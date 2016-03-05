@@ -186,3 +186,9 @@ void Setting::SetDatabase(Database &db)
     db.SetUser(this->databaseUser);
     db.SetPassword(this->databasePwd);
 }
+
+QString Setting::ToMD5(const QString &str)
+{
+    QByteArray bb = QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Md5);
+    return bb.toHex();
+}

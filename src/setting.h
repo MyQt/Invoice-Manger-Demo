@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QDebug>
+#include <QCryptographicHash>
 #include "database.h"
 
 #define mysql_config 1
@@ -21,6 +22,7 @@ public:
     bool LoadConfigFromXml();
     void SetDatabase(Database &db);
     QString GetPath();
+    static QString ToMD5(const QString &str);
 
     void SetHost(QString &host);
     void SetPort(int port);

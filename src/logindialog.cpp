@@ -6,7 +6,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
-    ui->statusLabel->setText(tr("Connecting Database..."));
+    ui->statusLabel->setText(tr("正在连接数据库..."));
     ui->userEdit->setDisabled(true);
     ui->pwdEdit->setDisabled(true);
     ui->loginButton->setDisabled(true);
@@ -19,6 +19,8 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_loginButton_clicked()
 {
+    QString username = ui->userEdit->text();
+    QString pwd = Setting::ToMD5(ui->pwdEdit->text());
 
 }
 
