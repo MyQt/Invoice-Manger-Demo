@@ -42,6 +42,8 @@ void Setting::SetPassword(QString &pwd)
 
 QString Setting::GetPath()
 {
+    if (!path.isNull())
+        return path;
     QStringList envList = QProcess::systemEnvironment();
     QString tempPath;
     foreach (tempPath, envList) {
@@ -50,15 +52,18 @@ QString Setting::GetPath()
             break;
         }
     }
-    this->path = tempPath + "/Invoice";
-    return this->path;
+    path = tempPath + "/Invoice";
+    path = QDir::toNativeSeparators(path);
+    return path;
 }
 
 bool Setting::LoadConfigFromXml()
 {
     if (this->path.isNull())
         this->GetPath();
-    QFile file(path + "/config.xml");
+    QString filePath = path + "/config.xml";
+    filePath = QDir::toNativeSeparators(filePath);
+    QFile file(filePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         throw "Cannot read file:" + file.errorString();
         return false;
@@ -144,8 +149,9 @@ bool Setting::SaveConfigToXml()
     if (!dir.exists()) {
         dir.mkdir(path);
     }
-
-    QFile file(path + "/config.xml");
+    QString filePath = path + "/config.xml";
+    filePath = QDir::toNativeSeparators(filePath);
+    QFile file(filePath);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         throw "Cannot write file:" + file.errorString();
         return false;

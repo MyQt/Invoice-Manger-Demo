@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "database.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +16,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void SetUser();
 private:
     Ui::MainWindow *ui;
+    Database db;
 };
 
 #endif // MAINWINDOW_H

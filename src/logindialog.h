@@ -17,7 +17,6 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
-    void SetDatabase(Setting &set);
     void ConnectDatabase();
 private slots:
     void on_loginButton_clicked();

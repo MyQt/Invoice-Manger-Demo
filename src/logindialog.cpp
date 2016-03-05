@@ -42,11 +42,7 @@ void LoginDialog::ConnectDatabase()
         }
     }
     catch (QString e) {
-        ui->statusLabel->setText(e);
+        ui->statusLabel->setText("无法连接数据库,请检查网络状况/数据库配置");
     }
 }
 
-void LoginDialog::SetDatabase(Setting &set)
-{
-    set.SetDatabase(this->db);
-}

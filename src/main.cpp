@@ -6,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    Database db;
     Setting set;
     MainWindow w;
     ConfigDialog clf;
@@ -19,11 +20,13 @@ int main(int argc, char *argv[])
             return -1;
         }
     }
+    set.SetDatabase(db);
     ldl.show();
-    ldl.SetDatabase(set);
     ldl.ConnectDatabase();
     if (ldl.exec() == ldl.Accepted) {
         w.show();
+    } else {
+        return 0;
     }
 
     return a.exec();

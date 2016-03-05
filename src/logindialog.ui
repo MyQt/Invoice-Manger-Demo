@@ -11,15 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Login</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>90</x>
      <y>70</y>
-     <width>71</width>
-     <height>16</height>
+     <width>80</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
@@ -32,14 +32,17 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>90</x>
      <y>110</y>
-     <width>59</width>
-     <height>16</height>
+     <width>80</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>Password</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="userEdit">
@@ -50,8 +53,8 @@
     <rect>
      <x>180</x>
      <y>70</y>
-     <width>113</width>
-     <height>21</height>
+     <width>120</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="maxLength">
@@ -63,8 +66,8 @@
     <rect>
      <x>180</x>
      <y>110</y>
-     <width>113</width>
-     <height>21</height>
+     <width>120</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="maxLength">
@@ -79,7 +82,7 @@
     <rect>
      <x>50</x>
      <y>170</y>
-     <width>113</width>
+     <width>100</width>
      <height>32</height>
     </rect>
    </property>
@@ -90,9 +93,9 @@
   <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>250</x>
      <y>170</y>
-     <width>113</width>
+     <width>100</width>
      <height>32</height>
     </rect>
    </property>
@@ -103,10 +106,10 @@
   <widget class="QLabel" name="statusLabel">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>35</x>
      <y>230</y>
-     <width>181</width>
-     <height>31</height>
+     <width>330</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">

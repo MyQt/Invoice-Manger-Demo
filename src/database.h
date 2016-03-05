@@ -5,24 +5,25 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDebug>
+#include "user.h"
 
 class Database
 {
 public:
     Database();
-    void SetHost(const QString &host);
-    void SetPort(const int port);
-    void SetName(const QString &name);
-    void SetUser(const QString &user);
-    void SetPassword(const QString &pwd);
-    bool Connect();
-    void DisConnect();
-    bool Login(const QString &username, const QString &password, QString &result);
+    static void SetHost(const QString &host);
+    static void SetPort(const int port);
+    static void SetName(const QString &name);
+    static void SetUser(const QString &user);
+    static void SetPassword(const QString &pwd);
+    static bool Connect();
+    static void DisConnect();
+    static bool Login(const QString &username, const QString &password, QString &error);
 private:
-    QString host, name, user, pwd;
-    int port;
-    QSqlDatabase db;
-    bool isConnected;
+    static QString host, name, user, password;
+    static int port;
+    static QSqlDatabase db;
+    static bool isConnected;
 };
 
 #endif // DATABASE_H
