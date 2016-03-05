@@ -21,10 +21,17 @@ void LoginDialog::on_loginButton_clicked()
 {
     QString username = ui->userEdit->text();
     QString pwd = Setting::ToMD5(ui->pwdEdit->text());
-
+    QString result;
+    if (db.Login(username, pwd, result)) {
+        db.DisConnect();
+        QMessageBox::information(this, "Success!", result, QMessageBox::Ok);
+        accept();
+    } else {
+        QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
+    }
 }
 
-void LoginDialog::ConnectDatabase(Database &db)
+void LoginDialog::ConnectDatabase()
 {
     try {
         if (db.Connect()) {
@@ -35,6 +42,11 @@ void LoginDialog::ConnectDatabase(Database &db)
         }
     }
     catch (QString e) {
-        QMessageBox::warning(this, "Error!", e, QMessageBox::Cancel);
+        ui->statusLabel->setText(e);
     }
+}
+
+void LoginDialog::SetDatabase(Setting &set)
+{
+    set.SetDatabase(this->db);
 }

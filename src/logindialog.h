@@ -17,12 +17,14 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
-    void ConnectDatabase(Database &db);
+    void SetDatabase(Setting &set);
+    void ConnectDatabase();
 private slots:
     void on_loginButton_clicked();
-
 private:
     Ui::LoginDialog *ui;
+    Database db;
+
 };
 
 #endif // LOGINDIALOG_H
