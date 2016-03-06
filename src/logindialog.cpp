@@ -23,7 +23,7 @@ void LoginDialog::on_loginButton_clicked()
     QString pwd = Setting::ToMD5(ui->pwdEdit->text());
     QString result;
     if (db.Login(username, pwd, result)) {
-        db.DisConnect();
+        //db.DisConnect();
         QMessageBox::information(this, "Success!", result, QMessageBox::Ok);
         accept();
     } else {
@@ -42,7 +42,7 @@ void LoginDialog::ConnectDatabase()
         }
     }
     catch (QString e) {
-        ui->statusLabel->setText("无法连接数据库,请检查网络状况/数据库配置");
+        qDebug() << e;
     }
 }
 

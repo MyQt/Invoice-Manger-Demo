@@ -22,8 +22,15 @@ int main(int argc, char *argv[])
     }
     set.SetDatabase(db);
     ldl.show();
-    ldl.ConnectDatabase();
+    QElapsedTimer et;
+    et.start();
+    while(et.elapsed()<300)
+    {
+        QCoreApplication::processEvents();
+        ldl.ConnectDatabase();
+    }
     if (ldl.exec() == ldl.Accepted) {
+        w.SetUserModel();
         w.show();
     } else {
         return 0;

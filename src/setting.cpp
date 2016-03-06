@@ -162,7 +162,7 @@ bool Setting::SaveConfigToXml()
     xmlWriter.writeStartDocument();
     xmlWriter.writeStartElement("config");
     xmlWriter.writeStartElement("mysql");
-    xmlWriter.writeAttribute("id", "1");
+    xmlWriter.writeAttribute("id", QString::number(mysql_config));
     xmlWriter.writeTextElement("host", this->host);
     xmlWriter.writeTextElement("port", QString::number(this->port));
     xmlWriter.writeTextElement("database", this->name);
@@ -170,7 +170,7 @@ bool Setting::SaveConfigToXml()
     xmlWriter.writeTextElement("password", this->databasePwd);
     xmlWriter.writeEndElement();
     xmlWriter.writeStartElement("user");
-    xmlWriter.writeAttribute("id", "2");
+    xmlWriter.writeAttribute("id", QString::number(user_config));
     xmlWriter.writeTextElement("username", this->user);
     xmlWriter.writeTextElement("password", this->pwd);
     xmlWriter.writeEndElement();

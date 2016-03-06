@@ -13,6 +13,11 @@ Database::Database()
 
 }
 
+Database::~Database()
+{
+    DisConnect();
+}
+
 void Database::SetHost(const QString &host)
 {
     Database::host = host;
@@ -90,4 +95,34 @@ bool Database::Login(const QString &username, const QString &password, QString &
     }
     result = "Unknow error!";
     return false;
+}
+
+bool Database::SetUserModel(QStandardItemModel *model, QString &result)
+{
+    QSqlQuery query;
+    if (!query.exec("select * from user")) {
+        result = query.lastError().text();
+        return false;
+    }
+    int count = 0;
+    while (query.next()) {
+        qDebug() << count;
+        for (int i = 0; i < 10; i++) {
+            qDebug() << i << ": " << query.value(i).toString();
+            if (i == 1) continue;
+            QString value;
+            if (i == 3) {
+                int gender = query.value(i).toInt();
+                value = User::GetGender(gender);
+            } else if (i == 8) {
+                int level = query.value(i).toInt();
+                value = User::GetLevel(level);
+            } else {
+                value = query.value(i).toString();
+            }
+            model->setItem(count, i == 0 ? 0 : i - 1, new QStandardItem(value));
+        }
+        count++;
+    }
+    return true;
 }

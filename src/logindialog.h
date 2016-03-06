@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QElapsedTimer>
 #include "setting.h"
 #include "database.h"
 

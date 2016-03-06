@@ -19,14 +19,16 @@ SOURCES += main.cpp\
     configdialog.cpp \
     database.cpp \
     setting.cpp \
-    user.cpp
+    user.cpp \
+    model.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
     configdialog.h \
     database.h \
     setting.h \
-    user.h
+    user.h \
+    model.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \

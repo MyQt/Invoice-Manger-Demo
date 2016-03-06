@@ -5,12 +5,15 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QStandardItemModel>
+
 #include "user.h"
 
 class Database
 {
 public:
     Database();
+    ~Database();
     static void SetHost(const QString &host);
     static void SetPort(const int port);
     static void SetName(const QString &name);
@@ -19,6 +22,7 @@ public:
     static bool Connect();
     static void DisConnect();
     static bool Login(const QString &username, const QString &password, QString &error);
+    static bool SetUserModel(QStandardItemModel *model, QString &result);
 private:
     static QString host, name, user, password;
     static int port;

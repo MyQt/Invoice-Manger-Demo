@@ -15,6 +15,9 @@ public:
     static bool isLogined;
     static int level;
     User();
+
+    static QString GetGender(int gender);
+    static QString GetLevel(int level);
 };
 
 #endif // USER_H

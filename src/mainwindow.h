@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "model.h"
 #include "database.h"
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
     ~MainWindow();
 
     void SetUser();
+    void SetUserModel();
 private:
     Ui::MainWindow *ui;
     Database db;

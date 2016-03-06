@@ -17,3 +17,16 @@ void MainWindow::SetUser()
 {
 
 }
+
+void MainWindow::SetUserModel()
+{
+    Model::SetUserModel();
+    QString result;
+    Database::SetUserModel(Model::userModel, result);
+    ui->userTableView->setModel(Model::userModel);
+    ui->userTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
+    for (int i = 0; i < 9; i++) {
+        ui->userTableView->setColumnWidth(i, 100);
+    }
+    ui->userTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
