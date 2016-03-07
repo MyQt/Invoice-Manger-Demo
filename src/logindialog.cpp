@@ -19,10 +19,10 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_loginButton_clicked()
 {
-    QString username = ui->userEdit->text();
+    QString number = ui->userEdit->text();
     QString pwd = Setting::ToMD5(ui->pwdEdit->text());
     QString result;
-    if (db.Login(username, pwd, result)) {
+    if (db.Login(number, pwd, result)) {
         //db.DisConnect();
         QMessageBox::information(this, "Success!", result, QMessageBox::Ok);
         accept();

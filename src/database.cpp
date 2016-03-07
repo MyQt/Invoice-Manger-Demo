@@ -64,13 +64,13 @@ void Database::DisConnect()
     db.close();
 }
 
-bool Database::Login(const QString &username, const QString &password, QString &result)
+bool Database::Login(const QString &number, const QString &password, QString &result)
 {
     QSqlQuery query;
     QString str1 = "password";
     QString str2 = "name";
     QString str3 = "level";
-    QString queryString = QString("select * from user where number like '%%0%'").arg(username);
+    QString queryString = QString("select * from user where number like '%%0%'").arg(number);
     if (!query.exec(queryString)) {
         result = query.lastError().text();
         return false;
@@ -82,6 +82,7 @@ bool Database::Login(const QString &username, const QString &password, QString &
             QString username = query.value(str2).toString();
             int level = query.value(str3).toString().toInt();
 
+            User::number = number;
             User::username = username;
             User::level = level;
             User::isLogined = true;
@@ -129,7 +130,7 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
     return true;
 }
 
-bool Database::Insert(const QString &queryString, QString &result)
+bool Database::Query(const QString &queryString, QString &result)
 {
     QSqlQuery query;
     if (!query.exec(queryString)) {
@@ -139,3 +140,4 @@ bool Database::Insert(const QString &queryString, QString &result)
     result = "success";
     return true;
 }
+

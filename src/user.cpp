@@ -3,6 +3,7 @@
 const int User::ADMIN = 3;
 const int User::MANAGER = 2;
 const int User::SALESMAN = 1;
+const int User::UNKONW = -1;
 
 QString User::number = "";
 QString User::username = "";
@@ -14,7 +15,7 @@ User::User()
 
 }
 
-QString User::GetGender(int gender)
+QString User::GetGender(const int gender)
 {
     switch (gender) {
     case 0:
@@ -26,16 +27,30 @@ QString User::GetGender(int gender)
     }
 }
 
-QString User::GetLevel(int level)
+QString User::GetLevel(const int level)
 {
     switch (level) {
-    case 1:
+    case SALESMAN:
         return QString("Salesman");
-    case 2:
+    case MANAGER:
         return QString("Manager");
-    case 3:
+    case ADMIN:
         return QString("Admin");
     default:
         return QString("Unkonw");
     }
+}
+
+int User::GetLevel(const QString &level)
+{
+    if (level == QString("ADMIN")) {
+        return ADMIN;
+    }
+    if (level == QString("MANAGER")) {
+        return MANAGER;
+    }
+    if (level == QString("SALESMAN")) {
+        return SALESMAN;
+    }
+    return UNKONW;
 }

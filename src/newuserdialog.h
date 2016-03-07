@@ -6,6 +6,7 @@
 #include "database.h"
 #include "user.h"
 #include "setting.h"
+#include "alteruser.h"
 
 namespace Ui {
 class NewUserDialog;
@@ -18,6 +19,7 @@ class NewUserDialog : public QDialog
 public:
     explicit NewUserDialog(QWidget *parent = 0);
     ~NewUserDialog();
+    void GetAlterUser();
 
 private slots:
     void on_saveButton_clicked();
@@ -25,6 +27,9 @@ private slots:
 private:
     Ui::NewUserDialog *ui;
     void SetDefault();
+    void SaveUserInfo();
+    void AlterUserInfo();
+    void DeleteUserInfo();
 };
 
 #endif // NEWUSERDIALOG_H

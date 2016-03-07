@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     setting.cpp \
     user.cpp \
     model.cpp \
-    newuserdialog.cpp
+    newuserdialog.cpp \
+    alteruser.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     setting.h \
     user.h \
     model.h \
-    newuserdialog.h
+    newuserdialog.h \
+    alteruser.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \

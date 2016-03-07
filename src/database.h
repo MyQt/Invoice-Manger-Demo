@@ -24,7 +24,7 @@ public:
     //Connect and login
     static bool Connect();
     static void DisConnect();
-    static bool Login(const QString &username, const QString &password, QString &error);
+    static bool Login(const QString &number, const QString &password, QString &error);
 
     //set models
     static bool SetUserModel(QStandardItemModel *model, QString &result);
@@ -32,9 +32,7 @@ public:
     static bool SetProducerModel(QStandardItemModel*model, QString &result);
 
     //SQL query
-    static bool Insert(const QString& queryString, QString &result);
-    static bool Find(const QString& table, const QString& queryString, QString &result);
-    static bool Remove(const QString& table, const QString& queryString, QString &result);
+    static bool Query(const QString& queryString, QString &result);
 
 
 private:

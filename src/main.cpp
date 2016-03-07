@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     Database db;
     Setting set;
-    MainWindow w;
     ConfigDialog clf;
     LoginDialog ldl;
     try {
@@ -32,6 +31,7 @@ int main(int argc, char *argv[])
         QCoreApplication::processEvents();
         ldl.ConnectDatabase();
     }
+    MainWindow w;
     if (ldl.exec() == ldl.Accepted) {
         w.SetUserModel();
         w.show();
