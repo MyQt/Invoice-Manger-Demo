@@ -81,9 +81,11 @@ bool Database::Login(const QString &username, const QString &password, QString &
             result = "登录成功!";
             QString username = query.value(str2).toString();
             int level = query.value(str3).toString().toInt();
+
             User::username = username;
             User::level = level;
             User::isLogined = true;
+
             return true;
         } else {
             result = "密码错误!";
@@ -109,12 +111,12 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
         qDebug() << count;
         for (int i = 0; i < 10; i++) {
             qDebug() << i << ": " << query.value(i).toString();
-            if (i == 1) continue;
+            if (i == 1) continue; //ignore password
             QString value;
-            if (i == 3) {
+            if (i == 3) { //get gender
                 int gender = query.value(i).toInt();
                 value = User::GetGender(gender);
-            } else if (i == 8) {
+            } else if (i == 8) { //get level
                 int level = query.value(i).toInt();
                 value = User::GetLevel(level);
             } else {
@@ -124,5 +126,16 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
         }
         count++;
     }
+    return true;
+}
+
+bool Database::Insert(const QString &queryString, QString &result)
+{
+    QSqlQuery query;
+    if (!query.exec(queryString)) {
+        result = query.lastError().text();
+        return false;
+    }
+    result = "success";
     return true;
 }

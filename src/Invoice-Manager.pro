@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     database.cpp \
     setting.cpp \
     user.cpp \
-    model.cpp
+    model.cpp \
+    newuserdialog.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -28,8 +29,10 @@ HEADERS  += mainwindow.h \
     database.h \
     setting.h \
     user.h \
-    model.h
+    model.h \
+    newuserdialog.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
-    configdialog.ui
+    configdialog.ui \
+    newuserdialog.ui

@@ -24,16 +24,21 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
+    <widget class="QWidget" name="mainTab">
+     <attribute name="title">
+      <string>主页</string>
+     </attribute>
+    </widget>
     <widget class="QWidget" name="productionTab">
      <attribute name="title">
       <string>商品管理</string>
      </attribute>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="storeTab">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>库存管理</string>
      </attribute>
     </widget>
     <widget class="QWidget" name="userTab">
@@ -48,6 +53,51 @@
         <width>500</width>
         <height>490</height>
        </rect>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="userTabStatus">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>460</y>
+        <width>250</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="userDetailEdit">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>0</y>
+        <width>220</width>
+        <height>300</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="newUserButton">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>320</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>新增用户</string>
       </property>
      </widget>
     </widget>

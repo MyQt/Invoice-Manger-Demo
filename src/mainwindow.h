@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "model.h"
 #include "database.h"
+#include "newuserdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,11 @@ public:
 
     void SetUser();
     void SetUserModel();
+private slots:
+    void on_userTableView_clicked(const QModelIndex &index);
+
+    void on_newUserButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Database db;
