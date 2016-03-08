@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     if (ldl.exec() == ldl.Accepted) {
         w.SetUserModel();
+        w.SetProductionModel();
         w.show();
     } else {
         return 0;

@@ -130,6 +130,26 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
     return true;
 }
 
+bool Database::SetProductionModel(QStandardItemModel *model, QString &result)
+{
+    QSqlQuery query;
+    if (!query.exec("select * from production")) {
+        result = query.lastError().text();
+        return false;
+    }
+    int count = 0;
+    while (query.next()) {
+        for (int i = 0; i < 4; i++) {
+            qDebug() << i << ": " << query.value(i).toString();
+
+            QString value = query.value(i).toString();
+            model->setItem(count, i, new QStandardItem(value));
+        }
+        count++;
+    }
+    return true;
+}
+
 bool Database::Query(const QString &queryString, QString &result)
 {
     QSqlQuery query;
@@ -141,3 +161,18 @@ bool Database::Query(const QString &queryString, QString &result)
     return true;
 }
 
+bool Database::GetInputLogById(int number, QStringList& strList)
+{
+    QSqlQuery query;
+    QString queryString = QString("select * from inputlog where item id = '%0'").arg(number);
+
+    if (!query.exec(queryString)) {
+        return false;
+    }
+
+    while (query.next()) {
+        for (int i = 0; i < 6; i++) {
+
+        }
+    }
+}

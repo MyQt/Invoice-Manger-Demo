@@ -1,6 +1,7 @@
 #include "model.h"
 
 QStandardItemModel *Model::userModel = new QStandardItemModel();
+QStandardItemModel *Model::productionModel = new QStandardItemModel();
 
 Model::Model()
 {
@@ -16,4 +17,14 @@ void Model::SetUserModel()
         userModel->setHeaderData(i, Qt::Horizontal, strList[i]);
     }
 
+}
+
+void Model::SetProductionModel()
+{
+    productionModel->setColumnCount(4);
+    QStringList strList;
+    strList << "编号" << "名称" << "生产商" << "库存";
+    for (int i = 0; i < 4; i++) {
+        productionModel->setHeaderData(i, Qt::Horizontal, strList[i]);
+    }
 }

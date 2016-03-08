@@ -8,7 +8,10 @@ class Model
 public:
     Model();
     static void SetUserModel();
+    static void SetProductionModel();
     static QStandardItemModel *userModel;
+    static QStandardItemModel *productionModel;
+
 private:
 };
 

@@ -14,6 +14,7 @@ class Database
 public:
     Database();
     ~Database();
+
     //set database config
     static void SetHost(const QString &host);
     static void SetPort(const int port);
@@ -33,7 +34,8 @@ public:
 
     //SQL query
     static bool Query(const QString& queryString, QString &result);
-
+    static bool GetInputLogById(int number, QStringList& strList);
+    static bool GetOutputLogById(int number, QStringList& strList);
 
 private:
     static QString host, name, user, password;
