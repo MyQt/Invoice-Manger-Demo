@@ -22,6 +22,13 @@ public:
     static void SetUser(const QString &user);
     static void SetPassword(const QString &pwd);
 
+    static int userColumnCount;
+    static int productionColumnCount;
+    static int inputlogColumnCount;
+    static int outputlogColumnCount;
+    static int customerColumnCount;
+    static int producerColumnCount;
+
     //Connect and login
     static bool Connect();
     static void DisConnect();
@@ -34,8 +41,9 @@ public:
 
     //SQL query
     static bool Query(const QString& queryString, QString &result);
-    static bool GetInputLogById(int number, QStringList& strList);
-    static bool GetOutputLogById(int number, QStringList& strList);
+    static bool Find(const QString& queryString, QString& result);
+    static QString FindValue(const QString& queryString, int index = 0);
+    static bool GetInOutLogById(int number, QStringList& strList, QString type = "inputlog");
 
 private:
     static QString host, name, user, password;

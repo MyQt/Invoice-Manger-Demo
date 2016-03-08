@@ -10,10 +10,10 @@ Model::Model()
 
 void Model::SetUserModel()
 {
-    userModel->setColumnCount(9);
+    userModel->setColumnCount(Database::userColumnCount - 1);
     QStringList strList;
     strList << "编号" << "姓名" << "性别" << "电话" << "邮箱" << "入职日期" << "地址" << "职位" << "备注";
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < Database::userColumnCount - 1; i++) {
         userModel->setHeaderData(i, Qt::Horizontal, strList[i]);
     }
 
@@ -21,10 +21,10 @@ void Model::SetUserModel()
 
 void Model::SetProductionModel()
 {
-    productionModel->setColumnCount(4);
+    productionModel->setColumnCount(Database::productionColumnCount);
     QStringList strList;
-    strList << "编号" << "名称" << "生产商" << "库存";
-    for (int i = 0; i < 4; i++) {
+    strList << "编号" << "名称" << "库存" << "备注";
+    for (int i = 0; i < Database::productionColumnCount; i++) {
         productionModel->setHeaderData(i, Qt::Horizontal, strList[i]);
     }
 }

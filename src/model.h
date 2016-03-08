@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include <QStandardItemModel>
+#include "database.h"
 
 class Model
 {

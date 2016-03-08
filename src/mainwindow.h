@@ -6,6 +6,7 @@
 #include "model.h"
 #include "database.h"
 #include "newuserdialog.h"
+#include "newproductiondialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +37,10 @@ private slots:
     void on_findUserButton_clicked();
 
     void on_productionTableView_clicked(const QModelIndex &index);
+
+    void on_reloadProductionButton_clicked();
+
+    void on_newProductionButton_clicked();
 
 private:
     Ui::MainWindow *ui;

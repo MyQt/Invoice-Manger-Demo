@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->removeTab(2);
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +40,7 @@ void MainWindow::LoadUserModel()
         ui->userTableView->setModel(Model::userModel);
         ui->userTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->userTableView->verticalHeader()->hide();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < Database::userColumnCount - 1; i++) {
             ui->userTableView->setColumnWidth(i, 100);
         }
         ui->userTabStatus->setText(tr("状态:Ok!"));
@@ -64,7 +65,7 @@ void MainWindow::SetTextDetail(const QModelIndex &index)
     QString text;
     QStringList detailList;
     detailList << "编号" << "姓名" << "性别" << "电话" << "邮箱" << "入职日期" << "地址" << "职位" << "备注";
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < Database::userColumnCount - 1; i++) {
         text += detailList[i] + ": " + ui->userTableView->model()->index(index.row(), i).data().toString() + "\n";
     }
     ui->userDetailEdit->setText(text);
@@ -79,7 +80,6 @@ void MainWindow::on_newUserButton_clicked()
         ReloadUserModel();
     }
 }
-
 
 void MainWindow::on_reloadButton_clicked()
 {
@@ -167,7 +167,7 @@ void MainWindow::LoadProductionModel()
         ui->productionTableView->setModel(Model::productionModel);
         ui->productionTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->productionTableView->verticalHeader()->hide();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < Database::productionColumnCount; i++) {
             ui->productionTableView->setColumnWidth(i, 125);
         }
         ui->productionTabStatus->setText(tr("状态:Ok!"));
@@ -190,16 +190,55 @@ void MainWindow::on_productionTableView_clicked(const QModelIndex &index)
 void MainWindow::SetProductionDetail(const QModelIndex &index)
 {
     QString text;
+    int number = 0;
     QStringList detailList;
-    detailList << "编号" << "名称" << "生产商" << "单件成本" << "库存";
-    for (int i = 0; i < 5; i++) {
+    detailList << "编号" << "名称" << "库存" << "备注";
+    for (int i = 0; i < Database::productionColumnCount; i++) {
+        if (i == 0) number = ui->productionTableView->model()->index(index.row(), i).data().toInt();
         text += detailList[i] + ": " + ui->productionTableView->model()->index(index.row(), i).data().toString() + "\n";
     }
-    QString inputDetail = tr("进货记录: \n");
-    QString outputDetail = tr("出库记录: \n");
 
+    QStringList strList;
+    QString inputDetail = tr("\n入库记录: \n");
+    Database::GetInOutLogById(number, strList, "inputlog");
+    for (int i = 0; i < strList.length(); i++) {
+        QStringList tempList = strList[i].split(',');
+        inputDetail += "编号: " + tempList[0] + "\n";
+        inputDetail += "供应商编号: " + tempList[2] + "\n";
+        inputDetail += "数量: " + tempList[3] + "\n";
+        inputDetail += "日期: " + tempList[4] + "\n";
+        inputDetail += "单价: " + tempList[5] + "\n";
+        inputDetail += "备注: " + tempList[3] + "\n\n";
+    }
+
+    QString outputDetail = tr("出库记录: \n");
+    strList.clear();
+    Database::GetInOutLogById(number, strList, "outputlog");
+    for (int i = 0; i < strList.length(); i++) {
+        QStringList tempList = strList[i].split(',');
+        outputDetail += "编号: " + tempList[0] + "\n";
+        outputDetail += "顾客编号: " + tempList[2] + "\n";
+        outputDetail += "数量: " + tempList[3] + "\n";
+        outputDetail += "日期: " + tempList[4] + "\n";
+        outputDetail += "单价: " + tempList[5] + "\n";
+        outputDetail += "备注: " + tempList[6] + "\n\n";
+    }
 
     text += inputDetail + outputDetail;
     ui->produtionDetailEdit->setText(text);
 }
 
+void MainWindow::on_reloadProductionButton_clicked()
+{
+    ReloadProductionModel();
+}
+
+
+void MainWindow::on_newProductionButton_clicked()
+{
+    NewProductionDialog npdlg;
+    if (npdlg.exec() == QDialog::Accepted) {
+        QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Yes);
+        ReloadProductionModel();
+    }
+}

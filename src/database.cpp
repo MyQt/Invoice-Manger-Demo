@@ -1,5 +1,12 @@
 #include "database.h"
 
+int Database::userColumnCount = 10;
+int Database::productionColumnCount = 4;
+int Database::inputlogColumnCount = 7;
+int Database::outputlogColumnCount = 7;
+int Database::producerColumnCount = 5;
+int Database::customerColumnCount = 5;
+
 QString Database::host = "";
 int Database::port = 3306;
 QString Database::name = "";
@@ -110,7 +117,7 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
     int count = 0;
     while (query.next()) {
         qDebug() << count;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < userColumnCount; i++) {
             qDebug() << i << ": " << query.value(i).toString();
             if (i == 1) continue; //ignore password
             QString value;
@@ -139,7 +146,7 @@ bool Database::SetProductionModel(QStandardItemModel *model, QString &result)
     }
     int count = 0;
     while (query.next()) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < productionColumnCount; i++) {
             qDebug() << i << ": " << query.value(i).toString();
 
             QString value = query.value(i).toString();
@@ -161,18 +168,66 @@ bool Database::Query(const QString &queryString, QString &result)
     return true;
 }
 
-bool Database::GetInputLogById(int number, QStringList& strList)
+bool Database::Find(const QString &queryString, QString &result)
 {
     QSqlQuery query;
-    QString queryString = QString("select * from inputlog where item id = '%0'").arg(number);
-
     if (!query.exec(queryString)) {
+        result = query.lastError().text();
         return false;
     }
-
-    while (query.next()) {
-        for (int i = 0; i < 6; i++) {
-
-        }
+    if (query.first()) {
+        result = "success";
+        return true;
+    } else {
+        result = "not find";
+        return false;
     }
 }
+
+QString Database::FindValue(const QString &queryString, int index)
+{
+    QString result;
+    QSqlQuery query;
+    if (!query.exec(queryString)) {
+        qDebug() << query.lastError().text();
+        return "error";
+    }
+    if (query.first()) {
+        result = query.value(index).toString();
+    } else {
+        result = "not find";
+    }
+    return result;
+}
+
+bool Database::GetInOutLogById(int number, QStringList& strList, QString type)
+{
+    if (type != "inputlog" && type != "outputlog") return false;
+    QSqlQuery query;
+    QString queryString = QString("select * from %0 where itemid = %1").arg(type).arg(number);
+
+    if (!query.exec(queryString)) {
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    QString tempStr;
+
+    while (query.next()) {
+        if (query.value(1).toInt() == number) {
+            tempStr.clear();
+            for (int i = 0; i < inputlogColumnCount; i++) {
+                if (i == inputlogColumnCount - 2) {
+                    tempStr += QString::number(query.value(i).toDouble(), 'g', 3);
+                } else {
+                    tempStr += query.value(i).toString();
+                }
+                if (i != inputlogColumnCount - 1) {
+                    tempStr += ",";
+                }
+            }
+            strList << tempStr;
+        }
+    }
+    return true;
+}
+
