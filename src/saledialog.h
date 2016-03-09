@@ -28,6 +28,7 @@ private:
     Ui::SaleDialog *ui;
     void SetDefault();
     void SetInvetory();
+    bool SaveInfo();
 };
 
 #endif // SALEDIALOG_H

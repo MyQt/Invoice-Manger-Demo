@@ -247,11 +247,14 @@ void MainWindow::on_newProductionButton_clicked()
 void MainWindow::on_saleProductionButton_clicked()
 {
     Productions::nameList.clear();
+    Productions::currentName = "";
     int rowCount = ui->productionTableView->model()->rowCount();
     if (rowCount == 0) {
         QMessageBox::warning(this, "Error!", "仓库中没有商品!", QMessageBox::Ok);
         return;
     }
+    int currentRow = ui->productionTableView->currentIndex().row();
+    Productions::currentName = ui->productionTableView->model()->index(currentRow, 1).data().toString();
     for (int row = 0; row < rowCount; row++) {
         Productions::nameList << ui->productionTableView->model()->index(row, 1).data().toString();
     }

@@ -8,6 +8,8 @@ class Productions
 public:
     Productions();
     static QStringList nameList;
+    static QString currentName;
+    static QString currentNumber;
 };
 
 #endif // PRODUCTIONS_H
