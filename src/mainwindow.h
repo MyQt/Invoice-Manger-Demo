@@ -24,6 +24,7 @@ public:
 
     void SetUserModel();
     void SetProductionModel();
+    void SetUser();
 
 private slots:
     void on_userTableView_clicked(const QModelIndex &index);
@@ -49,8 +50,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Database db;
-
-    void SetUser();
 
     //userTabControl
     void ReloadUserModel();

@@ -16,7 +16,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::SetUser()
 {
-
+    ui->nameLabel->setText(tr("姓名: ") + User::username);
+    ui->numberLabel->setText(tr("编号: ") + User::number);
+    ui->levelLabel->setText(tr("职位: ") + User::GetLevel(User::level));
+    ui->detailEdit->setReadOnly(true);
 }
 
 //userTabControl
