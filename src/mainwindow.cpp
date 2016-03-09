@@ -233,7 +233,6 @@ void MainWindow::on_reloadProductionButton_clicked()
     ReloadProductionModel();
 }
 
-
 void MainWindow::on_newProductionButton_clicked()
 {
     NewProductionDialog npdlg;
@@ -241,4 +240,10 @@ void MainWindow::on_newProductionButton_clicked()
         QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Yes);
         ReloadProductionModel();
     }
+}
+
+
+void MainWindow::on_saleProductionButton_clicked()
+{
+
 }

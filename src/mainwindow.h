@@ -42,6 +42,8 @@ private slots:
 
     void on_newProductionButton_clicked();
 
+    void on_saleProductionButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Database db;
