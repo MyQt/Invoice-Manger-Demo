@@ -7,6 +7,8 @@
 #include "database.h"
 #include "newuserdialog.h"
 #include "newproductiondialog.h"
+#include "productions.h"
+#include "saledialog.h"
 
 namespace Ui {
 class MainWindow;

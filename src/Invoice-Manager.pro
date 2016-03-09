@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     model.cpp \
     newuserdialog.cpp \
     alteruser.cpp \
-    newproductiondialog.cpp
+    newproductiondialog.cpp \
+    saledialog.cpp \
+    productions.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -34,10 +36,13 @@ HEADERS  += mainwindow.h \
     model.h \
     newuserdialog.h \
     alteruser.h \
-    newproductiondialog.h
+    newproductiondialog.h \
+    saledialog.h \
+    productions.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
     configdialog.ui \
     newuserdialog.ui \
-    newproductiondialog.ui
+    newproductiondialog.ui \
+    saledialog.ui

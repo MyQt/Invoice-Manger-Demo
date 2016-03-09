@@ -77,8 +77,8 @@ void MainWindow::on_newUserButton_clicked()
     if (ndlg.exec() == QDialog::Accepted)
     {
         QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Ok);
-        ReloadUserModel();
     }
+    ReloadUserModel();
 }
 
 void MainWindow::on_reloadButton_clicked()
@@ -101,9 +101,9 @@ void MainWindow::on_removeUserButton_clicked()
             QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
         } else {
             QMessageBox::information(this, "Success", "删除成功!", QMessageBox::Ok);
-            ReloadUserModel();
         }
     }
+    ReloadUserModel();
 }
 
 void MainWindow::on_alterUserButton_clicked()
@@ -118,12 +118,12 @@ void MainWindow::on_alterUserButton_clicked()
         if (ndlg.exec() == QDialog::Accepted)
         {
             QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Ok);
-            ReloadUserModel();
         }
     } else {
         QMessageBox::warning(this, "Error!", "没有足够权限!", QMessageBox::Cancel);
     }
     AlterUser::isAltered = false;
+    ReloadUserModel();
 }
 
 void MainWindow::SetAlterUser()
@@ -149,6 +149,7 @@ void MainWindow::on_findUserButton_clicked()
             SetTextDetail(ui->userTableView->currentIndex());
         }
     }
+    ReloadUserModel();
 }
 
 //productionTabControl
@@ -238,12 +239,26 @@ void MainWindow::on_newProductionButton_clicked()
     NewProductionDialog npdlg;
     if (npdlg.exec() == QDialog::Accepted) {
         QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Yes);
-        ReloadProductionModel();
     }
+    ReloadProductionModel();
 }
 
 
 void MainWindow::on_saleProductionButton_clicked()
 {
+    Productions::nameList.clear();
+    int rowCount = ui->productionTableView->model()->rowCount();
+    if (rowCount == 0) {
+        QMessageBox::warning(this, "Error!", "仓库中没有商品!", QMessageBox::Ok);
+        return;
+    }
+    for (int row = 0; row < rowCount; row++) {
+        Productions::nameList << ui->productionTableView->model()->index(row, 1).data().toString();
+    }
+    SaleDialog sdlg;
+    if (sdlg.exec() == QDialog::Accepted) {
+        //...
+    }
 
+    ReloadProductionModel();
 }
