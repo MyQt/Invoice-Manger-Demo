@@ -2,15 +2,24 @@
 #include "configdialog.h"
 #include "logindialog.h"
 #include "newuserdialog.h"
+#include <QPluginLoader>
 #include <QApplication>
+#include <QTextCodec>
+#include <QLibrary>
+
+void LoadReleaseConfig(char *argv[]);
 
 int main(int argc, char *argv[])
 {
+#ifdef QT_NO_DEBUG
+    LoadReleaseConfig(argv);
+#endif
     QApplication a(argc, argv);
     Database db;
     Setting set;
     ConfigDialog clf;
     LoginDialog ldl;
+
     try {
         set.LoadConfigFromXml();
     }
@@ -42,4 +51,14 @@ int main(int argc, char *argv[])
     }
 
     return a.exec();
+}
+
+
+void LoadReleaseConfig(char *argv[])
+{
+    QTextCodec *xcodec = QTextCodec::codecForLocale() ;
+    QString exeDir = xcodec->toUnicode( QByteArray(argv[0]) ) ;
+    QString BKE_CURRENT_DIR = QFileInfo( exeDir ).path();
+    QString pluginsPath = BKE_CURRENT_DIR + QString("/") + "lib";
+    QApplication::setLibraryPaths( QApplication::libraryPaths() << BKE_CURRENT_DIR << pluginsPath) ;
 }

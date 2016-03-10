@@ -21,6 +21,8 @@ public:
     void ConnectDatabase();
 private slots:
     void on_loginButton_clicked();
+    void on_LoginDialog_destroyed();
+
 private:
     Ui::LoginDialog *ui;
     Database db;

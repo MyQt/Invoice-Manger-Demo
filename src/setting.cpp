@@ -47,8 +47,8 @@ QString Setting::GetPath()
     QStringList envList = QProcess::systemEnvironment();
     QString tempPath;
     foreach (tempPath, envList) {
-        if (tempPath.startsWith("HOME=")) {
-            tempPath = tempPath.mid(5);
+        if (tempPath.startsWith("APPDATA=")) {
+            tempPath = tempPath.mid(8);
             break;
         }
     }
@@ -63,6 +63,7 @@ bool Setting::LoadConfigFromXml()
         this->GetPath();
     QString filePath = path + "/config.xml";
     filePath = QDir::toNativeSeparators(filePath);
+    qDebug() << filePath;
     QFile file(filePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         throw "Cannot read file:" + file.errorString();

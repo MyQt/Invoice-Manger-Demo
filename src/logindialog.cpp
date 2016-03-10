@@ -42,7 +42,12 @@ void LoginDialog::ConnectDatabase()
         }
     }
     catch (QString e) {
-        qDebug() << e;
+        ui->statusLabel->setText(e);
     }
 }
 
+
+void LoginDialog::on_LoginDialog_destroyed()
+{
+    db.DisConnect();
+}

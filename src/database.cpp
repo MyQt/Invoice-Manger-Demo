@@ -52,6 +52,7 @@ void Database::SetPassword(const QString &pwd)
 
 bool Database::Connect()
 {
+    db = QSqlDatabase::addDatabase("QMYSQL");
     db.setDatabaseName(name);
     db.setHostName(host);
     db.setPort(port);
