@@ -59,7 +59,8 @@ bool Database::Connect()
     db.setUserName(user);
     db.setPassword(password);
 
-    if (!db.open()) {
+    if (!db.open())
+    {
         throw "Connect to MySql error: " + db.lastError().text();
         //return false;
     }
@@ -79,13 +80,15 @@ bool Database::Login(const QString &number, const QString &password, QString &re
     QString str2 = "name";
     QString str3 = "level";
     QString queryString = QString("select * from user where number like '%%0%'").arg(number);
-    if (!query.exec(queryString)) {
+    if (!query.exec(queryString))
+    {
         result = query.lastError().text();
         return false;
     }
     if (query.first()) {
         QString md5 = query.value(str1).toString();
-        if (md5 == password) {
+        if (md5 == password)
+        {
             result = "登录成功!";
             QString username = query.value(str2).toString();
             int level = query.value(str3).toString().toInt();
@@ -96,11 +99,15 @@ bool Database::Login(const QString &number, const QString &password, QString &re
             User::isLogined = true;
 
             return true;
-        } else {
+        }
+        else
+        {
             result = "密码错误!";
             return false;
         }
-    } else {
+    }
+    else
+    {
         result = "未找到此用户!";
         return false;
     }
@@ -111,24 +118,32 @@ bool Database::Login(const QString &number, const QString &password, QString &re
 bool Database::SetUserModel(QStandardItemModel *model, QString &result)
 {
     QSqlQuery query;
-    if (!query.exec("select * from user")) {
+    if (!query.exec("select * from user"))
+    {
         result = query.lastError().text();
         return false;
     }
     int count = 0;
-    while (query.next()) {
+    while (query.next())
+    {
         qDebug() << count;
-        for (int i = 0; i < userColumnCount; i++) {
+        for (int i = 0; i < userColumnCount; i++)
+        {
             qDebug() << i << ": " << query.value(i).toString();
             if (i == 1) continue; //ignore password
             QString value;
-            if (i == 3) { //get gender
+            if (i == 3)
+            { //get gender
                 int gender = query.value(i).toInt();
                 value = User::GetGender(gender);
-            } else if (i == 8) { //get level
+            }
+            else if (i == 8)
+            { //get level
                 int level = query.value(i).toInt();
                 value = User::GetLevel(level);
-            } else {
+            }
+            else
+            {
                 value = query.value(i).toString();
             }
             model->setItem(count, i == 0 ? 0 : i - 1, new QStandardItem(value));
@@ -141,13 +156,15 @@ bool Database::SetUserModel(QStandardItemModel *model, QString &result)
 bool Database::SetProductionModel(QStandardItemModel *model, QString &result)
 {
     QSqlQuery query;
-    if (!query.exec("select * from production")) {
+    if (!query.exec("select * from production"))
+    {
         result = query.lastError().text();
         return false;
     }
     int count = 0;
     while (query.next()) {
-        for (int i = 0; i < productionColumnCount; i++) {
+        for (int i = 0; i < productionColumnCount; i++)
+        {
             qDebug() << i << ": " << query.value(i).toString();
 
             QString value = query.value(i).toString();
@@ -161,7 +178,8 @@ bool Database::SetProductionModel(QStandardItemModel *model, QString &result)
 bool Database::Query(const QString &queryString, QString &result)
 {
     QSqlQuery query;
-    if (!query.exec(queryString)) {
+    if (!query.exec(queryString))
+    {
         result = query.lastError().text();
         return false;
     }
@@ -172,14 +190,18 @@ bool Database::Query(const QString &queryString, QString &result)
 bool Database::Find(const QString &queryString, QString &result)
 {
     QSqlQuery query;
-    if (!query.exec(queryString)) {
+    if (!query.exec(queryString))
+    {
         result = query.lastError().text();
         return false;
     }
-    if (query.first()) {
+    if (query.first())
+    {
         result = "success";
         return true;
-    } else {
+    }
+    else
+    {
         result = "not find";
         return false;
     }
@@ -189,13 +211,17 @@ QString Database::FindValue(const QString &queryString, int index)
 {
     QString result;
     QSqlQuery query;
-    if (!query.exec(queryString)) {
+    if (!query.exec(queryString))
+    {
         qDebug() << query.lastError().text();
         return "error";
     }
-    if (query.first()) {
+    if (query.first())
+    {
         result = query.value(index).toString();
-    } else {
+    }
+    else
+    {
         result = "not find";
     }
     return result;
@@ -207,22 +233,31 @@ bool Database::GetInOutLogById(int number, QStringList& strList, QString type)
     QSqlQuery query;
     QString queryString = QString("select * from %0 where itemid = %1").arg(type).arg(number);
 
-    if (!query.exec(queryString)) {
+    if (!query.exec(queryString))
+    {
         qDebug() << query.lastError().text();
         return false;
     }
     QString tempStr;
 
-    while (query.next()) {
-        if (query.value(1).toInt() == number) {
+    while (query.next())
+    {
+        if (query.value(1).toInt() == number)
+        {
             tempStr.clear();
-            for (int i = 0; i < inputlogColumnCount; i++) {
-                if (i == inputlogColumnCount - 2) {
+            for (int i = 0; i < inputlogColumnCount; i++)
+            {
+                if (i == inputlogColumnCount - 2)
+                {
                     tempStr += QString::number(query.value(i).toDouble(), 'g', 3);
-                } else {
+                }
+                else
+                {
                     tempStr += query.value(i).toString();
                 }
-                if (i != inputlogColumnCount - 1) {
+
+                if (i != inputlogColumnCount - 1)
+                {
                     tempStr += ",";
                 }
             }

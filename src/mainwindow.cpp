@@ -26,7 +26,8 @@ void MainWindow::SetUser()
 
 void MainWindow::SetUserModel()
 {
-    if (User::level < User::ADMIN) {
+    if (User::level < User::ADMIN)
+    {
         ui->removeUserButton->setDisabled(true);
     }
 
@@ -39,15 +40,19 @@ void MainWindow::LoadUserModel()
     ui->userTabStatus->setText(tr("状态:获取员工数据..."));
     Model::SetUserModel();
     QString result;
-    if (db.SetUserModel(Model::userModel, result)) {
+    if (db.SetUserModel(Model::userModel, result))
+    {
         ui->userTableView->setModel(Model::userModel);
         ui->userTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->userTableView->verticalHeader()->hide();
-        for (int i = 0; i < Database::userColumnCount - 1; i++) {
+        for (int i = 0; i < Database::userColumnCount - 1; i++)
+        {
             ui->userTableView->setColumnWidth(i, 100);
         }
         ui->userTabStatus->setText(tr("状态:Ok!"));
-    } else {
+    }
+    else
+    {
         ui->userTabStatus->setText(tr("状态:") + result);
     }
 }
@@ -68,7 +73,8 @@ void MainWindow::SetTextDetail(const QModelIndex &index)
     QString text;
     QStringList detailList;
     detailList << "编号" << "姓名" << "性别" << "电话" << "邮箱" << "入职日期" << "地址" << "职位" << "备注";
-    for (int i = 0; i < Database::userColumnCount - 1; i++) {
+    for (int i = 0; i < Database::userColumnCount - 1; i++)
+    {
         text += detailList[i] + ": " + ui->userTableView->model()->index(index.row(), i).data().toString() + "\n";
     }
     ui->userDetailEdit->setText(text);
@@ -93,16 +99,21 @@ void MainWindow::on_removeUserButton_clicked()
 {
     int currentRow = ui->userTableView->currentIndex().row();
     int number = ui->userTableView->model()->index(currentRow, 0).data().toInt();
-    if (number == User::number.toInt()) {
+    if (number == User::number.toInt())
+    {
         QMessageBox::warning(this, "Error!", "不能删除自身!", QMessageBox::Ok);
     }
     if (QMessageBox::warning(this, "Warning!", "确认删除此用户?", QMessageBox::Yes, QMessageBox::Cancel)
-            == QMessageBox::Yes) {
+            == QMessageBox::Yes)
+    {
         QString queryString = QString("delete from user where number = %0").arg(number);
         QString result;
-        if (!db.Query(queryString, result)) {
+        if (!db.Query(queryString, result))
+        {
             QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
-        } else {
+        }
+        else
+        {
             QMessageBox::information(this, "Success", "删除成功!", QMessageBox::Ok);
         }
     }
@@ -114,7 +125,8 @@ void MainWindow::on_alterUserButton_clicked()
     NewUserDialog ndlg;
     int currentRow = ui->userTableView->currentIndex().row();
     int number = ui->userTableView->model()->index(currentRow, 0).data().toInt();
-    if (number == User::number.toInt() || User::level >= User::ADMIN ) {
+    if (number == User::number.toInt() || User::level >= User::ADMIN )
+    {
         AlterUser::isAltered = true;
         SetAlterUser();
         ndlg.GetAlterUser();
@@ -122,7 +134,9 @@ void MainWindow::on_alterUserButton_clicked()
         {
             QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Ok);
         }
-    } else {
+    }
+    else
+    {
         QMessageBox::warning(this, "Error!", "没有足够权限!", QMessageBox::Cancel);
     }
     AlterUser::isAltered = false;
@@ -146,8 +160,10 @@ void MainWindow::SetAlterUser()
 void MainWindow::on_findUserButton_clicked()
 {
     int number = QInputDialog::getInt(this, tr("Input"), tr("请输入员工编号"), User::number.toInt());
-    for (int row = 0; row < ui->userTableView->model()->rowCount(); row++) {
-        if (number == ui->userTableView->model()->index(row, 0).data().toInt()) {
+    for (int row = 0; row < ui->userTableView->model()->rowCount(); row++)
+    {
+        if (number == ui->userTableView->model()->index(row, 0).data().toInt())
+        {
             ui->userTableView->setCurrentIndex(ui->userTableView->model()->index(row, 0));
             SetTextDetail(ui->userTableView->currentIndex());
         }
@@ -167,15 +183,19 @@ void MainWindow::LoadProductionModel()
     ui->productionTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     Model::SetProductionModel();
     QString result;
-    if (db.SetProductionModel(Model::productionModel, result)) {
+    if (db.SetProductionModel(Model::productionModel, result))
+    {
         ui->productionTableView->setModel(Model::productionModel);
         ui->productionTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->productionTableView->verticalHeader()->hide();
-        for (int i = 0; i < Database::productionColumnCount; i++) {
+        for (int i = 0; i < Database::productionColumnCount; i++)
+        {
             ui->productionTableView->setColumnWidth(i, 125);
         }
         ui->productionTabStatus->setText(tr("状态:Ok!"));
-    } else {
+    }
+    else
+    {
         ui->productionTabStatus->setText(tr("状态:") + result);
     }
 }
@@ -197,7 +217,8 @@ void MainWindow::SetProductionDetail(const QModelIndex &index)
     int number = 0;
     QStringList detailList;
     detailList << "编号" << "名称" << "库存" << "备注";
-    for (int i = 0; i < Database::productionColumnCount; i++) {
+    for (int i = 0; i < Database::productionColumnCount; i++)
+    {
         if (i == 0) number = ui->productionTableView->model()->index(index.row(), i).data().toInt();
         text += detailList[i] + ": " + ui->productionTableView->model()->index(index.row(), i).data().toString() + "\n";
     }
@@ -205,7 +226,8 @@ void MainWindow::SetProductionDetail(const QModelIndex &index)
     QStringList strList;
     QString inputDetail = tr("\n入库记录: \n");
     Database::GetInOutLogById(number, strList, "inputlog");
-    for (int i = 0; i < strList.length(); i++) {
+    for (int i = 0; i < strList.length(); i++)
+    {
         QStringList tempList = strList[i].split(',');
         inputDetail += "编号: " + tempList[0] + "\n";
         inputDetail += "供应商编号: " + tempList[2] + "\n";
@@ -218,7 +240,8 @@ void MainWindow::SetProductionDetail(const QModelIndex &index)
     QString outputDetail = tr("出库记录: \n");
     strList.clear();
     Database::GetInOutLogById(number, strList, "outputlog");
-    for (int i = 0; i < strList.length(); i++) {
+    for (int i = 0; i < strList.length(); i++)
+    {
         QStringList tempList = strList[i].split(',');
         outputDetail += "编号: " + tempList[0] + "\n";
         outputDetail += "顾客编号: " + tempList[2] + "\n";
@@ -240,7 +263,8 @@ void MainWindow::on_reloadProductionButton_clicked()
 void MainWindow::on_newProductionButton_clicked()
 {
     NewProductionDialog npdlg;
-    if (npdlg.exec() == QDialog::Accepted) {
+    if (npdlg.exec() == QDialog::Accepted)
+    {
         QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Yes);
     }
     ReloadProductionModel();
@@ -252,17 +276,20 @@ void MainWindow::on_saleProductionButton_clicked()
     Productions::nameList.clear();
     Productions::currentName = "";
     int rowCount = ui->productionTableView->model()->rowCount();
-    if (rowCount == 0) {
+    if (rowCount == 0)
+    {
         QMessageBox::warning(this, "Error!", "仓库中没有商品!", QMessageBox::Ok);
         return;
     }
     int currentRow = ui->productionTableView->currentIndex().row();
     Productions::currentName = ui->productionTableView->model()->index(currentRow, 1).data().toString();
-    for (int row = 0; row < rowCount; row++) {
+    for (int row = 0; row < rowCount; row++)
+    {
         Productions::nameList << ui->productionTableView->model()->index(row, 1).data().toString();
     }
     SaleDialog sdlg;
-    if (sdlg.exec() == QDialog::Accepted) {
+    if (sdlg.exec() == QDialog::Accepted)
+    {
         //...
     }
 

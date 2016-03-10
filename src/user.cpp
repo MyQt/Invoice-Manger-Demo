@@ -17,7 +17,8 @@ User::User()
 
 QString User::GetGender(const int gender)
 {
-    switch (gender) {
+    switch (gender)
+    {
     case 0:
         return QString("Man");
     case 1:
@@ -29,7 +30,8 @@ QString User::GetGender(const int gender)
 
 QString User::GetLevel(const int level)
 {
-    switch (level) {
+    switch (level)
+    {
     case SALESMAN:
         return QString("Salesman");
     case MANAGER:
@@ -43,13 +45,16 @@ QString User::GetLevel(const int level)
 
 int User::GetLevel(const QString &level)
 {
-    if (level == QString("ADMIN")) {
+    if (level == QString("ADMIN"))
+    {
         return ADMIN;
     }
-    if (level == QString("MANAGER")) {
+    if (level == QString("MANAGER"))
+    {
         return MANAGER;
     }
-    if (level == QString("SALESMAN")) {
+    if (level == QString("SALESMAN"))
+    {
         return SALESMAN;
     }
     return UNKONW;

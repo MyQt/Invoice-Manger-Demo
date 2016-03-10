@@ -46,8 +46,10 @@ QString Setting::GetPath()
         return path;
     QStringList envList = QProcess::systemEnvironment();
     QString tempPath;
-    foreach (tempPath, envList) {
-        if (tempPath.startsWith("APPDATA=")) {
+    foreach (tempPath, envList)
+    {
+        if (tempPath.startsWith("APPDATA="))
+        {
             tempPath = tempPath.mid(8);
             break;
         }
@@ -65,35 +67,47 @@ bool Setting::LoadConfigFromXml()
     filePath = QDir::toNativeSeparators(filePath);
     qDebug() << filePath;
     QFile file(filePath);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
         throw "Cannot read file:" + file.errorString();
         return false;
     }
 
     xmlReader.setDevice(&file);
     while (!xmlReader.atEnd()) {
-        if (xmlReader.isStartElement()) {
-            if (xmlReader.name() == "mysql") {
+        if (xmlReader.isStartElement())
+        {
+            if (xmlReader.name() == "mysql")
+            {
                 ReadMysqlConfig();
-            } else if (xmlReader.name() == "user") {
+            }
+            else if (xmlReader.name() == "user")
+            {
                 ReadUserConfig();
-            } else if (xmlReader.name() != "config"){
+            }
+            else if (xmlReader.name() != "config")
+            {
                 //qDebug()<<xmlReader.name();
                 xmlReader.raiseError(QString("Not a valid config file!"));
-            } else {
+            }
+            else
+            {
                 xmlReader.readNext();
             }
         }
-        else {
+        else
+        {
             xmlReader.readNext();
         }
     }
     file.close();
-    if (xmlReader.hasError()) {
+    if (xmlReader.hasError())
+    {
         throw xmlReader.errorString();
         return false;
     }
-    if (file.error()) {
+    if (file.error())
+    {
         throw "Cannot read file:" + file.errorString();
         return false;
     }
@@ -103,19 +117,32 @@ bool Setting::LoadConfigFromXml()
 void Setting::ReadMysqlConfig()
 {
     xmlReader.readNext();
-    while (!xmlReader.isEndElement()) {
-        if (xmlReader.isStartElement()) {
-            if (xmlReader.name() == "host") {
+    while (!xmlReader.isEndElement())
+    {
+        if (xmlReader.isStartElement())
+        {
+            if (xmlReader.name() == "host")
+            {
                 this->host = xmlReader.readElementText();
-            } else if (xmlReader.name() == "port") {
+            }
+            else if (xmlReader.name() == "port")
+            {
                 this->port = xmlReader.readElementText().toInt();
-            } else if (xmlReader.name() == "database") {
+            }
+            else if (xmlReader.name() == "database")
+            {
                 this->name = xmlReader.readElementText();
-            } else if (xmlReader.name() == "username") {
+            }
+            else if (xmlReader.name() == "username")
+            {
                 this->databaseUser = xmlReader.readElementText();
-            } else if (xmlReader.name() == "password") {
+            }
+            else if (xmlReader.name() == "password")
+            {
                 this->databasePwd = xmlReader.readElementText();
-            } else {
+            }
+            else
+            {
                 //qDebug() << xmlReader.name();
                 xmlReader.raiseError(QString("Not a valid config file!"));
             }
@@ -127,13 +154,20 @@ void Setting::ReadMysqlConfig()
 void Setting::ReadUserConfig()
 {
     xmlReader.readNext();
-    while (!xmlReader.isEndElement()) {
-        if (xmlReader.isStartElement()) {
-            if (xmlReader.name() == "username") {
+    while (!xmlReader.isEndElement())
+    {
+        if (xmlReader.isStartElement())
+        {
+            if (xmlReader.name() == "username")
+            {
                 this->user = xmlReader.readElementText();
-            } else if (xmlReader.name() == "password") {
+            }
+            else if (xmlReader.name() == "password")
+            {
                 this->pwd = xmlReader.readElementText();
-            } else {
+            }
+            else
+            {
                 //qDebug()<<xmlReader.name();
                 xmlReader.raiseError(QString("Not a valid config file!"));
             }
@@ -147,13 +181,15 @@ bool Setting::SaveConfigToXml()
     if (this->path.isNull())
         this->GetPath();
     QDir dir(path);
-    if (!dir.exists()) {
+    if (!dir.exists())
+    {
         dir.mkdir(path);
     }
     QString filePath = path + "/config.xml";
     filePath = QDir::toNativeSeparators(filePath);
     QFile file(filePath);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
         throw "Cannot write file:" + file.errorString();
         return false;
     }
@@ -178,7 +214,8 @@ bool Setting::SaveConfigToXml()
     xmlWriter.writeEndDocument();
     file.close();
 
-    if (file.error()) {
+    if (file.error())
+    {
         throw "Cannot write file:" + file.errorString();
         return false;
     }

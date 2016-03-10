@@ -35,7 +35,8 @@ void ConfigDialog::on_saveButton_clicked()
 
     try
     {
-        if (set.SaveConfigToXml()) {
+        if (set.SaveConfigToXml())
+        {
             QMessageBox::information(this, "OK!", "config saved!", QMessageBox::Ok);
             accept();
         }
