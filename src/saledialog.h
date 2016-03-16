@@ -26,6 +26,8 @@ private slots:
 
 private:
     Ui::SaleDialog *ui;
+
+    Database *db;
     void SetDefault();
     void SetInvetory();
     bool SaveInfo();

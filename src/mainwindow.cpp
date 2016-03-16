@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tabWidget->removeTab(2);
+    db = Database::Init();
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +40,7 @@ void MainWindow::LoadUserModel()
     ui->userTabStatus->setText(tr("状态:获取员工数据..."));
     Model::SetUserModel();
     QString result;
-    if (db.SetUserModel(Model::userModel, result)) {
+    if (db->SetUserModel(Model::userModel, result)) {
         ui->userTableView->setModel(Model::userModel);
         ui->userTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->userTableView->verticalHeader()->hide();
@@ -100,7 +101,7 @@ void MainWindow::on_removeUserButton_clicked()
             == QMessageBox::Yes) {
         QString queryString = QString("delete from user where number = %0").arg(number);
         QString result;
-        if (!db.Query(queryString, result)) {
+        if (!db->Query(queryString, result)) {
             QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
         } else {
             QMessageBox::information(this, "Success", "删除成功!", QMessageBox::Ok);
@@ -167,7 +168,7 @@ void MainWindow::LoadProductionModel()
     ui->productionTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     Model::SetProductionModel();
     QString result;
-    if (db.SetProductionModel(Model::productionModel, result)) {
+    if (db->SetProductionModel(Model::productionModel, result)) {
         ui->productionTableView->setModel(Model::productionModel);
         ui->productionTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
         ui->productionTableView->verticalHeader()->hide();
@@ -204,7 +205,7 @@ void MainWindow::SetProductionDetail(const QModelIndex &index)
 
     QStringList strList;
     QString inputDetail = tr("\n入库记录: \n");
-    Database::GetInOutLogById(number, strList, "inputlog");
+    db->GetInOutLogById(number, strList, "inputlog");
     for (int i = 0; i < strList.length(); i++) {
         QStringList tempList = strList[i].split(',');
         inputDetail += "编号: " + tempList[0] + "\n";
@@ -217,7 +218,7 @@ void MainWindow::SetProductionDetail(const QModelIndex &index)
 
     QString outputDetail = tr("出库记录: \n");
     strList.clear();
-    Database::GetInOutLogById(number, strList, "outputlog");
+    db->GetInOutLogById(number, strList, "outputlog");
     for (int i = 0; i < strList.length(); i++) {
         QStringList tempList = strList[i].split(',');
         outputDetail += "编号: " + tempList[0] + "\n";

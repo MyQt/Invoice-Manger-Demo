@@ -26,6 +26,8 @@ private slots:
 
 private:
     Ui::NewUserDialog *ui;
+
+    Database *db;
     void SetDefault();
     void SaveUserInfo();
     void AlterUserInfo();

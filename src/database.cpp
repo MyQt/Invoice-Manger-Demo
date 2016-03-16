@@ -7,22 +7,21 @@ int Database::outputlogColumnCount = 7;
 int Database::producerColumnCount = 5;
 int Database::customerColumnCount = 5;
 
-QString Database::host = "";
-int Database::port = 3306;
-QString Database::name = "";
-QString Database::user = "";
-QString Database::password = "";
-bool Database::isConnected = false;
-QSqlDatabase Database::db = QSqlDatabase::addDatabase("QMYSQL");
-
 Database::Database()
 {
-
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    isConnected = false;
 }
 
 Database::~Database()
 {
     DisConnect();
+}
+
+Database *Database::Init()
+{
+    static Database DB;
+    return &DB;
 }
 
 void Database::SetHost(const QString &host)

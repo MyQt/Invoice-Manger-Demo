@@ -5,6 +5,12 @@ Setting::Setting()
 
 }
 
+Setting* Setting::Init()
+{
+    static Setting SET;
+    return &SET;
+}
+
 void Setting::SetHost(QString &host)
 {
     this->host = host;

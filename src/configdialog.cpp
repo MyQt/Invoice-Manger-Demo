@@ -15,7 +15,7 @@ ConfigDialog::~ConfigDialog()
 
 void ConfigDialog::on_saveButton_clicked()
 {
-    Setting set;
+    Setting *set = Setting::Init();
     QString host = ui->hostEdit->text();
     int port = ui->portEdit->text().toInt();
     QString databaseName = ui->nameEdit->text();
@@ -25,17 +25,17 @@ void ConfigDialog::on_saveButton_clicked()
     QString user = "test";
     QString pwd = "123456";
 
-    set.SetHost(host);
-    set.SetPort(port);
-    set.SetName(databaseName);
-    set.SetDatabaseUser(databaseUser);
-    set.SetDatabasePassword(databasePwd);
-    set.SetUser(user);
-    set.SetPassword(pwd);
+    set->SetHost(host);
+    set->SetPort(port);
+    set->SetName(databaseName);
+    set->SetDatabaseUser(databaseUser);
+    set->SetDatabasePassword(databasePwd);
+    set->SetUser(user);
+    set->SetPassword(pwd);
 
     try
     {
-        if (set.SaveConfigToXml()) {
+        if (set->SaveConfigToXml()) {
             QMessageBox::information(this, "OK!", "config saved!", QMessageBox::Ok);
             accept();
         }

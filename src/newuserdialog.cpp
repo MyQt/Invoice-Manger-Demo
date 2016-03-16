@@ -7,6 +7,7 @@ NewUserDialog::NewUserDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     SetDefault();
+    db = Database::Init();
 }
 
 NewUserDialog::~NewUserDialog()
@@ -83,7 +84,7 @@ void NewUserDialog::SaveUserInfo()
     qDebug() << queryString;
 
     QString result;
-    if (Database::Query(queryString, result)) {
+    if (db->Query(queryString, result)) {
         accept();
     } else {
         QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
@@ -114,7 +115,7 @@ void NewUserDialog::AlterUserInfo()
             .arg(password).arg(name).arg(gender).arg(phone).arg(email).arg(employedDate).arg(address).arg(level).arg(ps).arg(AlterUser::number);
     qDebug() << queryString;
     QString result;
-    if (Database::Query(queryString, result)) {
+    if (db->Query(queryString, result)) {
         accept();
     } else {
         QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);

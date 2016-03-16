@@ -17,7 +17,7 @@
 class Setting
 {
 public:
-    Setting();
+    static Setting* Init();
     bool SaveConfigToXml();
     bool LoadConfigFromXml();
     void SetDatabase(Database &db);
@@ -33,6 +33,10 @@ public:
     void SetPassword(QString &pwd);
 
 private:
+    Setting();
+
+    static Setting set;
+
     void ReadMysqlConfig();
     void ReadUserConfig();
     QXmlStreamReader xmlReader;

@@ -7,6 +7,7 @@ NewProductionDialog::NewProductionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     SetDefault();
+    db = Database::Init();
 }
 
 NewProductionDialog::~NewProductionDialog()
@@ -43,9 +44,9 @@ bool NewProductionDialog::SaveProductionInfo()
 
     QString queryString = QString("select * from production where name = '%0'").arg(name);
     QString result;
-    if (Database::Find(queryString, result)) {
+    if (db->Find(queryString, result)) {
         queryString = QString("update production set inventory = inventory + %0 where name = '%1'").arg(quantity).arg(name);
-        if (!Database::Query(queryString, result)) {
+        if (!db->Query(queryString, result)) {
             QMessageBox::warning(this, "Error!", result, QMessageBox::Ok);
             return false;
         } else {
@@ -54,7 +55,7 @@ bool NewProductionDialog::SaveProductionInfo()
         }
     } else {
         queryString = QString("insert into production (`name`, `inventory`, `ps`) values ('%0', '%1', '%2')").arg(name).arg(quantity).arg(note);
-        if (Database::Query(queryString, result)) {
+        if (db->Query(queryString, result)) {
             //QMessageBox::information(this, "Success!", "保存成功!", QMessageBox::Yes);
             //return true;
         } else {
@@ -64,11 +65,11 @@ bool NewProductionDialog::SaveProductionInfo()
     }
 
     queryString = QString("select * from production where name = '%0'").arg(name);
-    int number = Database::FindValue(queryString, 0).toInt();
+    int number = db->FindValue(queryString, 0).toInt();
 
     queryString = QString("insert into inputlog (`itemid`, `producerid`, `quantity`, `date`, `price`, `ps`) values ('%0', '%1', '%2', '%3', '%4', '%5')")
             .arg(number).arg(producer).arg(quantity).arg(date).arg(price).arg(note);
-    if (Database::Query(queryString, result)) {
+    if (db->Query(queryString, result)) {
         return true;
     }
     return false;

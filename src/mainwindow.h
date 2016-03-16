@@ -49,7 +49,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Database db;
+    Database *db;
 
     //userTabControl
     void ReloadUserModel();

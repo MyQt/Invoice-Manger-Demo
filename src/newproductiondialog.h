@@ -23,6 +23,8 @@ private slots:
 
 private:
     Ui::NewProductionDialog *ui;
+
+    Database *db;
     void SetDefault();
     bool SaveProductionInfo();
 };

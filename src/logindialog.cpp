@@ -6,6 +6,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
+    db = Database::Init();
     ui->statusLabel->setText(tr("正在连接数据库..."));
     ui->userEdit->setDisabled(true);
     ui->pwdEdit->setDisabled(true);
@@ -22,7 +23,7 @@ void LoginDialog::on_loginButton_clicked()
     QString number = ui->userEdit->text();
     QString pwd = Setting::ToMD5(ui->pwdEdit->text());
     QString result;
-    if (db.Login(number, pwd, result)) {
+    if (db->Login(number, pwd, result)) {
         //db.DisConnect();
         QMessageBox::information(this, "Success!", result, QMessageBox::Ok);
         accept();
@@ -34,7 +35,7 @@ void LoginDialog::on_loginButton_clicked()
 void LoginDialog::ConnectDatabase()
 {
     try {
-        if (db.Connect()) {
+        if (db->Connect()) {
             ui->userEdit->setEnabled(true);
             ui->pwdEdit->setEnabled(true);
             ui->loginButton->setEnabled(true);

@@ -23,7 +23,7 @@ private slots:
     void on_loginButton_clicked();
 private:
     Ui::LoginDialog *ui;
-    Database db;
+    Database *db;
 
 };
 
